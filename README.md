@@ -153,7 +153,7 @@ MULTIMODAL_INTERACTION_SYSTEM/         # 具身智能多模态交互系统根目
 │   │   ├── haarcascade_frontalface_default.xml
 │   │   ├── emotion.onnx
 │   │   └── v5n.onnx
-│   ├── src/                          # 核心视觉计算与特征提纯 C++ 源代码 
+│   ├── src/                          # 核心视觉计算与特征提纯 C++ 源码 
 │   ├── CMakeLists.txt                # 本地 C++ 推理引擎 CMake 构建配置文件
 │   └── main.py                       # 视觉混合封装包本地单体功能调试入口
 │
@@ -164,9 +164,9 @@ MULTIMODAL_INTERACTION_SYSTEM/         # 具身智能多模态交互系统根目
 │   ├── CMakeLists.txt                # 底层子系统构建管理配置文件
 │   └── main.cpp                      # 纯 C++ 视觉子系统主程序入口 
 │
-├── 📂 Voice_Subsystem/                # 3. 语音系统主程序运行期流数据中转站 
+└── 📂 Voice_Subsystem/                # 3. 语音系统主程序运行期流数据中转站 
     └── code/
         └── audio/ 
-            └── live.flac             # 主循环调度运行期间的实时流式录音高频暂存音轨文件
-
+            └── live.flac              # 主循环调度运行期间的实时流式录音高频暂存音轨文件
+```
 
