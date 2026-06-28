@@ -91,11 +91,21 @@ Edge control &amp; multi-threading scheduling code for 'Zhiban Tongxin' on RDK X
 
 ## 🛠️ 部署与运行指南
 
-### 1. 安全隐私前置净化说明
+### 1. 环境配置与安全脱敏说明
 
-⚠️ **安全提示**：在将本系统部署到公开生产环境或提交给 GitHub 公开评审前，请务必处理个人资产隐私安全：
-* 打开 `run_system.py`，将代码中的 `DASH_API_KEY`（大模型鉴权）、`SECRET_ID` / `SECRET_KEY`（腾讯云语音合成鉴权）等机密明文替换为 `"YOUR_API_KEY_HERE"` 的安全占位符，防止云端算力被公开网络爬虫非法盗刷。
+为了保障个人云端算力资产安全，本开源仓库中的核心代码已进行了全链路的**安全脱敏处理（De-sensitization）**。若要在本地实际复现或拉起完整系统，请在运行前使用编辑器打开 `run_system.py`，并将以下变量的占位符手动修改为您个人的有效凭证：
 
+```python
+# 1. 本地 Whisper 语音识别服务端通信接口
+WHISPER_SERVER_URL = "填写您本地部署的 Whisper 服务器公网穿透/局域网真实地址"
+
+# 2. 地平线/阿里云 DashScope 大模型鉴权配置
+DASH_API_KEY = "填写您个人的阿里云 DashScope 真实密钥"
+
+# 3. 腾讯云在线语音合成 (TTS) 鉴权配置
+SECRET_ID = "填写您个人的腾讯云 SECRET_ID"
+SECRET_KEY = "填写您个人的腾讯云 SECRET_KEY"
+```
 ---
 
 ### 2. 本地依赖与模型就绪校验
@@ -155,31 +165,8 @@ MULTIMODAL_INTERACTION_SYSTEM/         # 具身智能多模态交互系统根目
 │   └── main.cpp                      # 纯 C++ 视觉子系统主程序入口 
 │
 ├── 📂 Voice_Subsystem/                # 3. 语音系统主程序运行期流数据中转站 
-│   └── code/
-│       └── audio/ 
-│           └── live.flac             # 主循环调度运行期间的实时流式录音高频暂存音轨文件
-│
-└── 📂 Voise_Subsystem/                # 4. 语音核心交互子系统（基于隔离 Python 虚拟环境的全栈闭环）
-    ├── 📂 .vscode/                    # 语音模块本地编辑器工作区环境配置
-    ├── 📂 bin/                        # 隔离环境专有可执行文件（含本地独立 python/pip 解释器与命令包）
-    ├── 📂 include/                    # 虚拟环境本地编译开发及 C-API 扩展头文件
-    ├── 📂 lib / lib64/                # 虚拟环境静态嵌套隔离的 Python 第三方全栈库依赖包（防环境污染）
-    ├── 📂 share/                      # 虚拟环境共享公共静态数据与系统配置路径
-    │
-    ├── 📂 code/                       # 语音子系统源码与功能开发核心集 
-    │   ├── audio/                    # 语音子系统本地静态/离线调测音轨存储目录 
-    │   ├── bot test.py               # 🚀 功能入口：独立于视觉的全链路语音对话与端云流控启动脚本
-    │   ├── bot.py / demo.py          # 机器人常规语音交互常驻处理逻辑与应用单体 Demo 
-    │   ├── micro.py / voicetest.py   # 硬件麦克风拾音、物理声卡占用及音频底层输入单体调测脚本 
-    │   ├── tts_test.py               # 腾讯云在线合成 (TTS) 与远程网络鉴权延迟测试脚本
-    │   ├── tts_pcm_test.py           # 底层音频流 PCM 解码与 ALSA 硬件驱动播放稳定性调测 
-    │   └── utils.py / 123.py         # 语音子系统文本 Emoji 规整、通用格式转码及辅助工具集
-    │
-    ├── 📄 pyvenv.cfg                  # Python 虚拟环境核心配置文件（确定本地沙盒隔离边界）
-    ├── ⚙️ arecord                     # 应急备份：本地定制编译的嵌入式 ALSA 音频流捕获二进制执行程序 
-    │
-    # 👇 流式音频软硬件转码调试记录与离线调测矩阵文件
-    ├── 🎵 raw.wav                     # 物理声卡硬件层直接采集的未经过格式处理的原始采样音频 
-    ├── 🎵 usb_test.wav                # 针对物理变构型大电流环境下，外接 USB 麦克风硬件输入的抗干扰测听音轨 
-    ├── 🎵 output.wav                  # 经由系统流拦截或重采样转码后生成的最终验证音轨
-    └── 🎵 test.flac / test.mp3 / test.wav / test1.wav / test2.wav  # 多编码格式/多采样率硬件兼容性调试矩阵
+    └── code/
+        └── audio/ 
+            └── live.flac             # 主循环调度运行期间的实时流式录音高频暂存音轨文件
+
+
